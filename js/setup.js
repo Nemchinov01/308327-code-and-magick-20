@@ -29,7 +29,8 @@ var getWizards = function () {
     });
   }
 };
-var wizardsArray = getWizards();
+getWizards();
+
 // Функция создания элемента
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
