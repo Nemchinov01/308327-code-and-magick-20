@@ -82,6 +82,14 @@ setupOpen.addEventListener('keydown', function (evt) {
   }
 });
 
+userNameInput.addEventListener('focusin', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+userNameInput.addEventListener('focusout', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
 // закрытие popup
 var closePopup = function () {
   setup.classList.add('hidden');
@@ -111,23 +119,29 @@ userNameInput.addEventListener('input', function () {
   }
 });
 
+// для делегирования
+var parentContainer = document.querySelector('.setup');
+
+var setColor = function (prop, element, input, color) {
+  element.style[prop] = color;
+  input.value = color;
+};
+
 // цвет плаща
 var wizardCoat = document.querySelector('.wizard-coat');
 wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = COAT_COLOR[randomNumber(COAT_COLOR.length)];
-  parentContainer.querySelector('input[name = "coat-color"]').value = wizardCoat.style.fill;
+  setColor('fill', wizardCoat, parentContainer.querySelector('input[name = "coat-color"]'), COAT_COLOR[randomNumber(COAT_COLOR.length)]);
 });
+
 // цвет глаз
 var wizardEyes = document.querySelector('.wizard-eyes');
 wizardEyes.addEventListener('click', function () {
-  wizardEyes.style.fill = EYES_COLOR[randomNumber(EYES_COLOR.length)];
-  parentContainer.querySelector('input[name = "eyes-color"]').value = wizardEyes.style.fill;
+  setColor('fill', wizardEyes, parentContainer.querySelector('input[name = "eyes-color"]'), EYES_COLOR[randomNumber(EYES_COLOR.length)]);
 });
+
 // цвет файербола
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
 wizardFireball.addEventListener('click', function () {
-  wizardFireball.style.background = FIREBALL_COLOR[randomNumber(FIREBALL_COLOR.length)];
-  parentContainer.querySelector('input[name = "fireball-color"]').value = wizardFireball.style.background;
+  setColor('background', wizardFireball, parentContainer.querySelector('input[name = "fireball-color"]'), FIREBALL_COLOR[randomNumber(FIREBALL_COLOR.length)]);
 });
-// делегирование
-var parentContainer = document.querySelector('.setup');
+
